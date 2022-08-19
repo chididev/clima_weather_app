@@ -12,53 +12,61 @@ class _CitySearchPageState extends State<CitySearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const SizedBox(
-            height: 30,
+      //appBar: AppBar(),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/bg3.jpg'),
+            fit: BoxFit.cover,
           ),
-          const TextField(
-            style: TextStyle(
-              color: Colors.black,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SizedBox(
+              height: 80,
             ),
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: Colors.white,
-              icon: Icon(
-                FontAwesomeIcons.city,
-                color: Colors.white,
+            const TextField(
+              style: TextStyle(
+                color: Colors.black,
               ),
-              hintText: 'Enter City Name',
-              hintStyle: TextStyle(color: Colors.grey),
-              border: OutlineInputBorder(
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                icon: Icon(
+                  FontAwesomeIcons.city,
+                  color: Colors.white,
+                ),
+                hintText: 'Enter City Name',
+                hintStyle: TextStyle(color: Colors.grey),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.fromLTRB(100, 18, 100, 18),
+              decoration: const BoxDecoration(
+                color: Color(0xFF0095FF),
                 borderRadius: BorderRadius.all(
                   Radius.circular(10),
                 ),
-                borderSide: BorderSide.none,
+              ),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  'Search',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
               ),
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.fromLTRB(100, 18, 100, 18),
-            decoration: const BoxDecoration(
-              color: Color(0xFF0095FF),
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
-              ),
-            ),
-            child: TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text(
-                'Search',
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

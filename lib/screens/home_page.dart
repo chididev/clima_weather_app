@@ -191,6 +191,20 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
+          Expanded(child: Card(
+            color: const Color(0xFF16182A),
+            margin: const EdgeInsets.all(25),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: const[
+                Icon(FontAwesomeIcons.house, color: Color(0xFF777884),),
+                Icon(FontAwesomeIcons.searchengin, color: Color(0xFF777884),),
+                Icon(FontAwesomeIcons.mapLocation, color: Color(0xFF777884),),
+                Icon(FontAwesomeIcons.user, color: Color(0xFF777884),),
+              ],
+            ),
+          ),
+          ),
         ],
       ),
     );

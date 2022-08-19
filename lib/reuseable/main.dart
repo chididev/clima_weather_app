@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:clima_weather_app/screens/intro_page.dart';
-// import 'package:clima_weather_app/screens/home_page.dart';
-// import 'package:clima_weather_app/screens/city_search_page.dart';
 
 void main() {
   runApp(const MyApp());
