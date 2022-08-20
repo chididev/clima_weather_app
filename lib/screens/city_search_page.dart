@@ -16,7 +16,7 @@ class _CitySearchPageState extends State<CitySearchPage> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/bg3.jpg'),
+            image: AssetImage('assets/bg2.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -26,20 +26,27 @@ class _CitySearchPageState extends State<CitySearchPage> {
             const SizedBox(
               height: 80,
             ),
-            const TextField(
-              style: TextStyle(
+            TextField(
+              style: const TextStyle(
                 color: Colors.black,
               ),
               decoration: InputDecoration(
+                suffixIcon: Container(
+                  child: const Icon(
+                    FontAwesomeIcons.searchengin,
+                    color: Colors.grey,
+                  ),
+                ),
+                suffixIconColor: Colors.black,
                 filled: true,
                 fillColor: Colors.white,
-                icon: Icon(
+                icon: const Icon(
                   FontAwesomeIcons.city,
                   color: Colors.white,
                 ),
                 hintText: 'Enter City Name',
-                hintStyle: TextStyle(color: Colors.grey),
-                border: OutlineInputBorder(
+                hintStyle: const TextStyle(color: Colors.grey),
+                border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),
                   ),
