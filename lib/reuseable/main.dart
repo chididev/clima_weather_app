@@ -19,12 +19,12 @@ class MyApp extends StatelessWidget {
           backgroundColor: Color(0xFF0B0C1E),
         ),
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const IntroPage(),
-        '/first': (context) => const HomePage(),
-        '/second': (context) => const CitySearchPage(),
-      },
+      home: const IntroPage(),
+      // initialRoute: '/',
+      // routes: {
+      //   '/': (context) => const IntroPage(),
+      //   '/first': (context) =>  HomePage(),
+      //   '/second': (context) => const CitySearchPage(),
     );
   }
 }

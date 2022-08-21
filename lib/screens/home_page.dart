@@ -3,13 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage(
+      {required this.temperature,
+      required this.condition,
+      required this.cityName,
+      required this.country});
+
+  final temperature;
+  final condition;
+  final cityName;
+  final country;
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -192,19 +202,32 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           //Fourth Tile
-          Expanded(child: Card(
-            color: const Color(0xFF16182A),
-            margin: const EdgeInsets.all(25),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const[
-                Icon(FontAwesomeIcons.house, color: Color(0xFF777884),),
-                Icon(FontAwesomeIcons.searchengin, color: Color(0xFF777884),),
-                Icon(FontAwesomeIcons.mapLocation, color: Color(0xFF777884),),
-                Icon(FontAwesomeIcons.user, color: Color(0xFF777884),),
-              ],
+          Expanded(
+            child: Card(
+              color: const Color(0xFF16182A),
+              margin: const EdgeInsets.all(25),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const [
+                  Icon(
+                    FontAwesomeIcons.house,
+                    color: Color(0xFF777884),
+                  ),
+                  Icon(
+                    FontAwesomeIcons.searchengin,
+                    color: Color(0xFF777884),
+                  ),
+                  Icon(
+                    FontAwesomeIcons.mapLocation,
+                    color: Color(0xFF777884),
+                  ),
+                  Icon(
+                    FontAwesomeIcons.user,
+                    color: Color(0xFF777884),
+                  ),
+                ],
+              ),
             ),
-          ),
           ),
         ],
       ),
