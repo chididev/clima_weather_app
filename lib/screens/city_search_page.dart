@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:clima_weather_app/reuseable/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CitySearchPage extends StatefulWidget {
@@ -9,10 +10,23 @@ class CitySearchPage extends StatefulWidget {
 }
 
 class _CitySearchPageState extends State<CitySearchPage> {
+  String cityName = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        leading: TextButton(
+          onPressed: (){
+            Navigator.pop(context);
+          },
+          child: const Icon(
+            FontAwesomeIcons.chevronLeft,
+            color: Colors.white,
+          ),
+        ),
+      ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -27,32 +41,13 @@ class _CitySearchPageState extends State<CitySearchPage> {
               height: 80,
             ),
             TextField(
+              onChanged: (value) {
+                cityName = value;
+              },
               style: const TextStyle(
                 color: Colors.black,
               ),
-              decoration: InputDecoration(
-                suffixIcon: Container(
-                  child: const Icon(
-                    FontAwesomeIcons.searchengin,
-                    color: Colors.grey,
-                  ),
-                ),
-                suffixIconColor: Colors.black,
-                filled: true,
-                fillColor: Colors.white,
-                icon: const Icon(
-                  FontAwesomeIcons.city,
-                  color: Colors.white,
-                ),
-                hintText: 'Enter City Name',
-                hintStyle: const TextStyle(color: Colors.grey),
-                border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                  borderSide: BorderSide.none,
-                ),
-              ),
+              decoration: kTextFielddecoration,
             ),
             Container(
               margin: const EdgeInsets.fromLTRB(100, 18, 100, 18),
@@ -63,8 +58,8 @@ class _CitySearchPageState extends State<CitySearchPage> {
                 ),
               ),
               child: TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
+                onPressed: () async {
+                  Navigator.pop(context, cityName);
                 },
                 child: const Text(
                   'Search',

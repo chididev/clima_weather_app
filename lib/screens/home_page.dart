@@ -1,24 +1,50 @@
 import 'package:clima_weather_app/screens/city_search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:clima_weather_app/services/weather_condition.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage(
-      {required this.temperature,
-      required this.condition,
-      required this.cityName,
-      required this.country});
-
-  final temperature;
-  final condition;
-  final cityName;
-  final country;
+  const HomePage({required this.locationWeather});
+  final locationWeather;
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  WeatherModel weather = WeatherModel();
+  var temperature;
+  var weatherMessage;
+  var weatherIcon;
+  var cityName;
+  var country;
+
+  @override
+  void initState() {
+    super.initState();
+    updateUI(widget.locationWeather);
+  }
+
+  Future<dynamic> updateUI(dynamic weatherData) async {
+    setState(() {
+      if (weatherData == null) {
+        temperature = 0;
+        weatherMessage =
+            'Unable to get weather data at the moment. Please try again shortly';
+        weatherIcon = 'Error';
+        cityName = 'Error';
+        country = 'Error';
+        return;
+      }
+      var temp = weatherData['main']['temp'];
+      temperature = temp.toInt();
+      weatherMessage = weather.getMessage(temperature);
+      var condition = weather.getWeatherIcon(weatherData['weather'][0]['id']);
+      weatherIcon = condition;
+      cityName = weatherData['name'];
+      country = weatherData['sys']['country'];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,41 +53,23 @@ class _HomePageState extends State<HomePage> {
         leading: const Icon(FontAwesomeIcons.bars),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Icon(
+          children: [
+            const Icon(
               FontAwesomeIcons.locationDot,
               color: Color(0xFF074083),
             ),
-            SizedBox(
+            const SizedBox(
               width: 5,
             ),
             Text(
-              'location, Nigeria',
-              style: TextStyle(
+              '$cityName, $country',
+              style: const TextStyle(
                 fontFamily: 'EBGaramond',
                 fontSize: 20,
               ),
             ),
           ],
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              FontAwesomeIcons.city,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (context) {
-                    return const CitySearchPage();
-                  },
-                ),
-              );
-            },
-          )
-        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -86,32 +94,31 @@ class _HomePageState extends State<HomePage> {
             flex: 3,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(
-                  FontAwesomeIcons.cloudSun,
-                  size: 150,
-                  color: Color(0xFFFEBF2F),
+              children: [
+                Text(
+                  '$weatherIcon',
+                  style: const TextStyle(
+                    fontSize: 100,
+                  ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text(
-                  "It's Sunny",
-                  style: TextStyle(
+                  '$temperature °C',
+                  style: const TextStyle(
                     fontFamily: 'EBGaramond',
-                    fontSize: 20,
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
                 Text(
-                  '29 C',
-                  style: TextStyle(
+                  '$weatherMessage in $cityName, $country.',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
                     fontFamily: 'EBGaramond',
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 28,
                     color: Colors.white,
                   ),
                 ),
@@ -205,25 +212,39 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: Card(
               color: const Color(0xFF16182A),
-              margin: const EdgeInsets.all(25),
+              margin: const EdgeInsets.fromLTRB(70, 25, 70, 25),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  Icon(
-                    FontAwesomeIcons.house,
-                    color: Color(0xFF777884),
+                children: [
+                  TextButton(
+                    onPressed: () async {
+                      var weatherData = await weather.getLocationWeather();
+                      updateUI(weatherData);
+                    },
+                    child: const Icon(
+                      FontAwesomeIcons.rotateLeft,
+                      color: Color(0xFF777884),
+                    ),
                   ),
-                  Icon(
-                    FontAwesomeIcons.searchengin,
-                    color: Color(0xFF777884),
-                  ),
-                  Icon(
-                    FontAwesomeIcons.mapLocation,
-                    color: Color(0xFF777884),
-                  ),
-                  Icon(
-                    FontAwesomeIcons.user,
-                    color: Color(0xFF777884),
+                  TextButton(
+                    onPressed: () async {
+                      var typedName = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return const CitySearchPage();
+                          },
+                        ),
+                      );
+                     if(typedName != null){
+                       var weatherData = await weather.getCityWeather(typedName);
+                       updateUI(weatherData);
+                     }
+                    },
+                    child: const Icon(
+                      FontAwesomeIcons.searchengin,
+                      color: Color(0xFF777884),
+                    ),
                   ),
                 ],
               ),
